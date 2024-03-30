@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: extract_rpm <rpm_file>"
+    exit 1
+fi
+    
+rpm2cpio "$1" | cpio -idmv
+
+
