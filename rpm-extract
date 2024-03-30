@@ -4,7 +4,12 @@ if [ $# -ne 1 ]; then
     echo "Usage: extract_rpm <rpm_file>"
     exit 1
 fi
-    
-rpm2cpio "$1" | cpio -idmv
+
+rpm_file="$1"
+rpm_filename=$(basename "$rpm_file")
+rpm_basename="${rpm_filename%.*}"
+
+mkdir -p "$rpm_basename" && cd "$rpm_basename"
+rpm2cpio "../$rpm_file" | cpio -idmv
 
 
