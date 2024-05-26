@@ -1,3 +1,5 @@
 export PATH=$PATH:/root/tpbin
 
-export PS1="\n\n\n$PS1\n >>>"
+promt_color_begin='\033[48;5;95;38;5;214m'
+promt_color_end='\033[0m'
+export PS1="\n\n${promt_color_begin}\t \u@\h: \w ${promt_color_end}\r\n\! >>> "
