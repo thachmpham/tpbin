@@ -6,40 +6,40 @@
 
 
 import argparse
+import os
 import yaml
 from rich.console import Console
 from rich.tree import Tree
 
-def yaml_to_rich_tree(data, parent=None):
-    if parent is None:
-        parent = Tree("root", guide_style="bold cyan")
 
+def build_tree(data, parent=None):
     if isinstance(data, dict):
         for key, value in data.items():
-            child = parent.add(f"[bold green]{key}[/]")
-            yaml_to_rich_tree(value, child)
+            child = parent.add(f"[bold]{key}[/]")
+            build_tree(value, child)
     elif isinstance(data, list):
         for i, item in enumerate(data):
-            child = parent.add(f"[bold yellow][{i}][/]")
-            yaml_to_rich_tree(item, child)
+            child = parent.add(f"[bold][{i}][/]")
+            build_tree(item, child)
     else:
-        parent.add(f"[dim]{data}[/]")
+        parent.add(f"[italic dim]{data}[/]")
 
     return parent
 
-def load_yaml_file(file_path):
-    with open(file_path, "r") as file:
-        return yaml.safe_load(file)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert yml to svg.")
-    parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input dot file.")
+    parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input yml file.")
     args = parser.parse_args()
+    file_path = args.input
+    file_name = os.path.basename(file_path)
 
-    file = open(args.input, "r")
+    file = open(file_path, "r")
     
     data = yaml.safe_load(file)
-    tree = yaml_to_rich_tree(data)
+
+    root = Tree(f"[bold green]{file_name}[/]")
+    tree = build_tree(data, root)
     
     console = Console()
     console.print(tree)
