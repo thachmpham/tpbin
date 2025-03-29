@@ -36,7 +36,10 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input dot file.")
     args = parser.parse_args()
 
-    data = load_yaml_file(args.input)
+    file = open(args.input, "r")
+    
+    data = yaml.safe_load(file)
     tree = yaml_to_rich_tree(data)
+    
     console = Console()
     console.print(tree)

@@ -12,19 +12,12 @@ from graphviz import Source
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert yml to svg.")
-
     parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input yml file.")
     parser.add_argument("-o", "--output", required=True, type=str, help="Path to the output svg file." )
-
     args = parser.parse_args()
 
     data = data_loader.load_yaml_or_json(args.input)
-
     dot_text = converter.convert_yaml_or_json_to_format(data, output_format="dot")
 
-    try:
-        graph = Source(dot_text)
-        graph.render(outfile=args.output, format="svg", cleanup=True)
-
-    except Exception as e:
-        print(f"Error: {e}")
+    graph = Source(dot_text)
+    graph.render(outfile=args.output, format="svg", cleanup=True)
