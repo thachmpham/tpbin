@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+
+# Requirement:
+# pip install yaml rich
+
+
+import argparse
+import yaml
+from rich.console import Console
+from rich.tree import Tree
+
+def yaml_to_rich_tree(data, parent=None):
+    if parent is None:
+        parent = Tree("root", guide_style="bold cyan")
+
+    if isinstance(data, dict):
+        for key, value in data.items():
+            child = parent.add(f"[bold green]{key}[/]")
+            yaml_to_rich_tree(value, child)
+    elif isinstance(data, list):
+        for i, item in enumerate(data):
+            child = parent.add(f"[bold yellow][{i}][/]")
+            yaml_to_rich_tree(item, child)
+    else:
+        parent.add(f"[dim]{data}[/]")
+
+    return parent
+
+def load_yaml_file(file_path):
+    with open(file_path, "r") as file:
+        return yaml.safe_load(file)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert yml to svg.")
+    parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input dot file.")
+    args = parser.parse_args()
+
+    data = load_yaml_file(args.input)
+    tree = yaml_to_rich_tree(data)
+    console = Console()
+    console.print(tree)
