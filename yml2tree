@@ -29,17 +29,17 @@ def build_tree(data, parent=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert yml to svg.")
-    parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input yml file.")
+    parser.add_argument("file_path", type=str, help="Path to the input yml file.")
     args = parser.parse_args()
-    file_path = args.input
+    file_path = args.file_path
     file_name = os.path.basename(file_path)
 
     file = open(file_path, "r")
-    
+
     data = yaml.safe_load(file)
 
     root = Tree(f"[bold green]{file_name}[/]")
     tree = build_tree(data, root)
-    
+
     console = Console()
     console.print(tree)

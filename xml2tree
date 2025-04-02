@@ -29,13 +29,13 @@ def build_tree(element, parent_tree):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Print xml tree.")
-    parser.add_argument("-i", "--input", required=True, type=str, help="Path to the input xml file.")
+    parser.add_argument("file_path", type=str, help="Path to the input xml file.")
     args = parser.parse_args()
-    file_path = args.input
+    file_path = args.file_path
     file_name = os.path.basename(file_path)
 
     root = ET.parse(file_path).getroot()
-    
+
     tree = Tree(f"[bold green]{file_name}[/]")
     build_tree(root, tree)
 
