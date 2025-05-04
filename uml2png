@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: uml2png <plantuml_text_file>"
+    exit 1
+fi
+
+input_file="$1"
+
+dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+plantuml="$dir/tools/plantuml-1.2025.2.jar"
+
+java -jar $plantuml $input_file
+
