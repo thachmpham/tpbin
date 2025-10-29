@@ -1,5 +1,7 @@
 # TP-Bin
 
+Quick scripts for work.
+
 **Setup `.bashrc`**
 ```sh
 $ vi ~/.bashrc
