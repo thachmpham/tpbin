@@ -1,4 +1,4 @@
-# TP-Bin
+# tpbin
 
 Quick scripts for work.
 
